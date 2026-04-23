@@ -418,7 +418,7 @@
   </div>
   <div class="day-body">
     <div class="opt-alert">
-      <strong>✅ 為什麼選瑞吉山而非 Titlis：</strong>時差第一天體力有限，瑞吉山 STP 全免、海拔僅 1,798m 無高山症風險、船程可讓孩子在移動中休息、隨時可彈性撤退。Titlis 改至隔天（Day 3）睡一覺後精神充沛再去，體驗更完整。
+      <strong>✅ 為什麼選瑞吉山：</strong>時差第一天體力有限，瑞吉山 STP 全免、海拔僅 1,798m 無高山症風險、船程可讓孩子在移動中休息、隨時可彈性撤退。本次行程不安排 Titlis，節省費用並保留體力給後續山區行程。
     </div>
     <div class="transport-block">
       <h4>⛴️🚆🚠 交通細節（金色環遊路線）</h4>
@@ -1860,5 +1860,245 @@ document.querySelectorAll('.day-card').forEach((card, index) => {
 });
 </script>
 
+<style>
+.speak-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px; height: 18px;
+  margin: 0 1px 0 3px;
+  border: none; background: none;
+  cursor: pointer; padding: 0;
+  border-radius: 3px;
+  opacity: 0.45;
+  transition: opacity .15s, transform .1s;
+  vertical-align: -3px;
+  flex-shrink: 0;
+  color: #4a9ebb;
+}
+.speak-btn:hover { opacity: 1; }
+.speak-btn.speaking {
+  opacity: 1;
+  animation: spk-pulse .55s ease-in-out infinite alternate;
+}
+@keyframes spk-pulse {
+  from { transform: scale(1); }
+  to   { transform: scale(1.3); }
+}
+.speak-btn svg { width: 13px; height: 13px; display: block; }
+</style>
+
+<script>
+(function(){
+const SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>`;
+
+/* 地名表：按 key 長度降序排列，長詞優先匹配 */
+const PLACES = [
+  {key:'Grindelwald Terminal',  ph:'Grindelwald Terminal',    lang:'de-CH'},
+  {key:'Kleine Scheidegg',      ph:'Kleine Scheidegg',        lang:'de-CH'},
+  {key:'Neuhausen am Rheinfall',ph:'Neuhausen am Rheinfall',  lang:'de-CH'},
+  {key:'Trockener Steg',        ph:'Trockener Steg',          lang:'de-CH'},
+  {key:'Rigi Scheidegg',        ph:'Rigi Scheidegg',          lang:'de-CH'},
+  {key:'Glacier Express',       ph:'Glacier Express',         lang:'en-GB'},
+  {key:'Eiger Express',         ph:'Eiger Express',           lang:'en-GB'},
+  {key:'Eigergletscher',        ph:'Eigergletscher',          lang:'de-CH'},
+  {key:'Jungfraujoch',          ph:'Jungfrau joch',           lang:'de-CH'},
+  {key:'Lauterbrunnen',         ph:'Lauterbrunnen',           lang:'de-CH'},
+  {key:'Zweilütschinen',        ph:'Zweilütschinen',          lang:'de-CH'},
+  {key:'Rigi Kaltbad',          ph:'Rigi Kaltbad',            lang:'de-CH'},
+  {key:'Riffelberg',            ph:'Riffelberg',              lang:'de-CH'},
+  {key:'Rotenboden',            ph:'Rotenboden',              lang:'de-CH'},
+  {key:'Alpnachstad',           ph:'Alpnachstad',             lang:'de-CH'},
+  {key:'Fräkmüntegg',           ph:'Fräkmüntegg',             lang:'de-CH'},
+  {key:'Krienseregg',           ph:'Krienseregg',             lang:'de-CH'},
+  {key:'Fronalpstock',          ph:'Fronalpstock',            lang:'de-CH'},
+  {key:'Stanserhorn',           ph:'Stanserhorn',             lang:'de-CH'},
+  {key:'Gornergrat',            ph:'Gornergrat',              lang:'de-CH'},
+  {key:'Matterhorn',            ph:'Matterhorn',              lang:'de-CH'},
+  {key:'Findelbach',            ph:'Findelbach',              lang:'de-CH'},
+  {key:'Riffelalp',             ph:'Riffelalp',               lang:'de-CH'},
+  {key:'Kapellbrücke',          ph:'Kapellbrücke',            lang:'de-CH'},
+  {key:'Grindelwald',           ph:'Grindelwald',             lang:'de-CH'},
+  {key:'Staubbachfall',         ph:'Staubbachfall',           lang:'de-CH'},
+  {key:'Trümmelbach',           ph:'Trümmelbach',             lang:'de-CH'},
+  {key:'Männlichen',            ph:'Männlichen',              lang:'de-CH'},
+  {key:'Stechelberg',           ph:'Stechelberg',             lang:'de-CH'},
+  {key:'Grütschalp',            ph:'Grütschalp',              lang:'de-CH'},
+  {key:'Rigi Kulm',             ph:'Rigi Kulm',               lang:'de-CH'},
+  {key:'Interlaken',            ph:'Interlaken',              lang:'de-CH'},
+  {key:'Rheinfall',             ph:'Rheinfall',               lang:'de-CH'},
+  {key:'Riffelsee',             ph:'Riffelsee',               lang:'de-CH'},
+  {key:'Jungfrau',              ph:'Jungfrau',                lang:'de-CH'},
+  {key:'Andermatt',             ph:'Andermatt',               lang:'de-CH'},
+  {key:'Engelberg',             ph:'Engelberg',               lang:'de-CH'},
+  {key:'Arth-Goldau',           ph:'Arth Goldau',             lang:'de-CH'},
+  {key:'Disentis',              ph:'Disentis',                lang:'de-CH'},
+  {key:'Bachalpsee',            ph:'Bachalpsee',              lang:'de-CH'},
+  {key:'Oberalp',               ph:'Oberalp',                 lang:'de-CH'},
+  {key:'Landwasser',            ph:'Landwasser',              lang:'de-CH'},
+  {key:'Vitznau',               ph:'Vitznau',                 lang:'de-CH'},
+  {key:'Zermatt',               ph:'Zermatt',                 lang:'de-CH'},
+  {key:'Schilthorn',            ph:'Schilthorn',              lang:'de-CH'},
+  {key:'Harder Kulm',           ph:'Harder Kulm',             lang:'de-CH'},
+  {key:'Kulmhotel',             ph:'Kulmhotel',               lang:'de-CH'},
+  {key:'Engadine',              ph:'Engadin',                 lang:'de-CH'},
+  {key:'Weggis',                ph:'Weggis',                  lang:'de-CH'},
+  {key:'Brienz',                ph:'Brienz',                  lang:'de-CH'},
+  {key:'Pilatus',               ph:'Pilatus',                 lang:'de-CH'},
+  {key:'Aletsch',               ph:'Aletsch',                 lang:'de-CH'},
+  {key:'Luzern',                ph:'Luzern',                  lang:'de-CH'},
+  {key:'Zürich',                ph:'Zürich',                  lang:'de-CH'},
+  {key:'Kriens',                ph:'Kriens',                  lang:'de-CH'},
+  {key:'Visp',                  ph:'Visp',                    lang:'de-CH'},
+  {key:'Brig',                  ph:'Brig',                    lang:'de-CH'},
+  {key:'Chur',                  ph:'Chur',                    lang:'de-CH'},
+  {key:'Bern',                  ph:'Bern',                    lang:'de-CH'},
+  {key:'Rigi',                  ph:'Rigi',                    lang:'de-CH'},
+  {key:'Spiez',                 ph:'Spiez',                   lang:'de-CH'},
+  {key:'Eiger',                 ph:'Eiger',                   lang:'de-CH'},
+  {key:'Mönch',                 ph:'Mönch',                   lang:'de-CH'},
+  {key:'Täsch',                 ph:'Täsch',                   lang:'de-CH'},
+  {key:'Wengen',                ph:'Wengen',                  lang:'de-CH'},
+  {key:'Mürren',                ph:'Mürren',                  lang:'de-CH'},
+  {key:'Furi',                  ph:'Furi',                    lang:'de-CH'},
+  {key:'Sphinx',                ph:'Sphinx',                  lang:'de-CH'},
+  /* 中文地名 → 唸德語發音 */
+  {key:'策馬特',  ph:'Zermatt',    lang:'de-CH'},
+  {key:'琉森',    ph:'Luzern',     lang:'de-CH'},
+  {key:'蘇黎世',  ph:'Zürich',     lang:'de-CH'},
+  {key:'伯恩',    ph:'Bern',       lang:'de-CH'},
+  {key:'少女峰',  ph:'Jungfrau',   lang:'de-CH'},
+].sort((a,b) => b.key.length - a.key.length);
+
+/* 全頁已插入過的地名（去重用） */
+const injected = new Set();
+
+let activeSyn = null;
+
+function speak(ph, lang, btn) {
+  if (!window.speechSynthesis) { alert('此瀏覽器不支援語音功能'); return; }
+  window.speechSynthesis.cancel();
+  document.querySelectorAll('.speak-btn.speaking').forEach(b => b.classList.remove('speaking'));
+  if (activeSyn && activeSyn._btn === btn) { activeSyn = null; return; }
+  const u = new SpeechSynthesisUtterance(ph);
+  u.lang = lang; u.rate = 0.82; u._btn = btn;
+  activeSyn = u;
+  btn.classList.add('speaking');
+  u.onend = u.onerror = () => {
+    btn.classList.remove('speaking');
+    if (activeSyn === u) activeSyn = null;
+  };
+  speechSynthesis.speak(u);
+}
+
+function makeBtn(place) {
+  const btn = document.createElement('button');
+  btn.className = 'speak-btn';
+  btn.title = `唸出「${place.key}」`;
+  btn.setAttribute('aria-label', `發音 ${place.key}`);
+  btn.innerHTML = SVG;
+  btn.addEventListener('click', e => { e.stopPropagation(); speak(place.ph, place.lang, btn); });
+  return btn;
+}
+
+/* 跳過這些 tag 裡的文字 */
+const SKIP = new Set(['SCRIPT','STYLE','BUTTON','INPUT','TEXTAREA','A','SVG','TITLE']);
+
+/* 以「行程元素」為去重單位的 className 集合 */
+const BLOCK_CLASSES = new Set([
+  'tl-main','tl-detail','tl-time',
+  'day-title','day-sub',
+  'sight-item',
+  'tips-block','opt-alert','warn-alert','rain-block',
+  'hotel-name',
+  'notice-bar',
+]);
+
+/* 找出文字節點所屬的「去重區塊元素」 */
+function getBlock(node) {
+  let el = node.parentElement;
+  while (el && el !== document.body) {
+    for (const cls of BLOCK_CLASSES) {
+      if (el.classList && el.classList.contains(cls)) return el;
+    }
+    el = el.parentElement;
+  }
+  return node.parentElement; // fallback
+}
+
+function processTextNode(textNode, blockInjected) {
+  const parent = textNode.parentElement;
+  if (!parent || SKIP.has(parent.tagName)) return;
+  if (parent.closest && parent.closest('svg')) return; // skip SVG text
+
+  const original = textNode.textContent;
+  let remaining = original;
+  const parts = [];
+
+  while (remaining.length > 0) {
+    let bestIdx = -1, bestPlace = null;
+    for (const p of PLACES) {
+      const idx = remaining.indexOf(p.key);
+      if (idx === -1) continue;
+      if (bestIdx === -1 || idx < bestIdx ||
+         (idx === bestIdx && p.key.length > bestPlace.key.length)) {
+        bestIdx = idx; bestPlace = p;
+      }
+    }
+    if (bestIdx === -1) { parts.push({ text: remaining, place: null }); break; }
+    if (bestIdx > 0) parts.push({ text: remaining.slice(0, bestIdx), place: null });
+    parts.push({ text: bestPlace.key, place: bestPlace });
+    remaining = remaining.slice(bestIdx + bestPlace.key.length);
+  }
+
+  if (!parts.some(p => p.place)) return;
+
+  const frag = document.createDocumentFragment();
+  for (const part of parts) {
+    frag.appendChild(document.createTextNode(part.text));
+    if (part.place) {
+      /* 去重範圍：同一 block 元素內不重複，不同 block 可以重複 */
+      if (!blockInjected.has(part.place.key)) {
+        blockInjected.add(part.place.key);
+        frag.appendChild(makeBtn(part.place));
+      }
+    }
+  }
+  parent.replaceChild(frag, textNode);
+}
+
+function walk(root) {
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode: n => {
+      if (SKIP.has(n.parentElement?.tagName)) return NodeFilter.FILTER_REJECT;
+      if (n.parentElement?.closest?.('svg')) return NodeFilter.FILTER_REJECT;
+      if (n.parentElement?.closest?.('.speak-btn')) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  const nodes = [];
+  let n;
+  while ((n = walker.nextNode())) nodes.push(n);
+
+  /* 依 block 分群，每個 block 有自己的去重 Set */
+  const blockMap = new Map();
+  nodes.forEach(node => {
+    const block = getBlock(node);
+    if (!blockMap.has(block)) blockMap.set(block, { nodes: [], injected: new Set() });
+    blockMap.get(block).nodes.push(node);
+  });
+
+  blockMap.forEach(({ nodes, injected }) => {
+    nodes.forEach(node => processTextNode(node, injected));
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => walk(document.body));
+} else {
+  walk(document.body);
+}
+})();
+</script>
 </body>
 </html>
