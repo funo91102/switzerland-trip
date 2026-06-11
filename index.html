@@ -250,6 +250,24 @@
   .hotel-block .hotel-name { font-weight: 700; color: #4c1d95; font-size: 13px; }
   .hotel-block .hotel-times { color: #5b21b6; margin-top: 2px; }
   .hotel-block .hotel-times span { 
+  .hotel-detail {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: 8px;
+  }
+  .hotel-tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; font-weight: 500;
+    padding: 3px 8px; border-radius: 10px;
+    white-space: nowrap;
+  }
+  .hotel-tag-ok   { background: #d1fae5; color: #065f46; }
+  .hotel-tag-warn { background: #fef3c7; color: #92400e; }
+  .hotel-tag-info { background: #e0e7ff; color: #3730a3; }
+  .hotel-tax {
+    margin-top: 6px; font-size: 11px; color: #b45309;
+    background: #fffbeb; border: 1px solid #fde68a;
+    border-radius: 6px; padding: 4px 10px; display: inline-block;
+  }
     display: inline-block; background: #ede9fe; border-radius: 6px;
     padding: 1px 8px; margin-right: 6px; font-size: 11px; font-weight: 600;
   }
@@ -492,6 +510,14 @@
       <div class="hotel-info">
         <div class="hotel-name">Hotel Monopol Luzern</div>
         <div class="hotel-times"><span>✅ 入住 7/13 15:00 起</span></div>
+      <div class="hotel-detail">
+        <span class="hotel-tag hotel-tag-warn">❌ 早餐不含（需另購）</span>
+        <span class="hotel-tag hotel-tag-ok">🍵 飲用水免費</span>
+        <span class="hotel-tag hotel-tag-ok">🎫 贈送琉森市區交通券</span>
+        <span class="hotel-tag hotel-tag-ok">🛁 迷你吧 + 咖啡機</span>
+        <span class="hotel-tag hotel-tag-info">📞 +41412264343</span>
+      </div>
+      <div class="hotel-tax">⚠️ 城市稅 約 CHF 35（TWD 1,496）（到店現場另付）</div>
       </div>
     </div>
   </div>
@@ -598,6 +624,11 @@
       <div class="hotel-info">
         <div class="hotel-name">Hotel Monopol Luzern</div>
         <div class="hotel-times"><span>🚪 退房 7/15 11:00 前</span></div><div style="color:#6b7280;font-size:11px;margin-top:3px;">明日退房，比一般飯店早，請注意</div>
+      <div class="hotel-detail">
+        <span class="hotel-tag hotel-tag-warn">❌ 早餐不含</span>
+        <span class="hotel-tag hotel-tag-ok">🎫 贈送琉森市區交通券</span>
+      </div>
+      <div class="hotel-tax">⚠️ 城市稅 約 CHF 35（到店付）（到店現場另付）</div>
       </div>
     </div>
   </div>
@@ -656,6 +687,14 @@
       <div class="hotel-info">
         <div class="hotel-name">Interlaken Youth Hostel</div>
         <div class="hotel-times"><span>✅ 入住 7/15 15:00 起</span></div>
+      <div class="hotel-detail">
+        <span class="hotel-tag hotel-tag-ok">🍳 早餐含（免費自助）</span>
+        <span class="hotel-tag hotel-tag-warn">❌ 不可自行烹煮</span>
+        <span class="hotel-tag hotel-tag-ok">🎮 兒童遊樂場 + 遊戲室</span>
+        <span class="hotel-tag hotel-tag-ok">🍽️ 3a Restaurant（午晚餐）</span>
+        <span class="hotel-tag hotel-tag-info">⚠️ 入住前 48 小時聯絡告知抵達時間</span>
+      </div>
+      <div class="hotel-tax">⚠️ 城市稅 約 CHF 13（TWD 549）（到店現場另付）</div>
       </div>
     </div>
   </div>
@@ -716,7 +755,12 @@
       <div class="hotel-icon">🏩</div>
       <div class="hotel-info">
         <div class="hotel-name">Interlaken Youth Hostel</div>
-        <div class="hotel-times"><span>🚪 退房 7/17 10:00 前</span></div><div style="color:#6b7280;font-size:11px;margin-top:3px;">明日退房，比一般飯店早，請注意</div>
+        <div class="hotel-times"><span>🚪 退房 7/17 10:00 前</span></div><div style="color:#6b7280;font-size:11px;margin-top:3px;">退房後行李可寄存，再前往 First</div>
+      <div class="hotel-detail">
+        <span class="hotel-tag hotel-tag-ok">🍳 早餐含（免費自助）</span>
+        <span class="hotel-tag hotel-tag-ok">🧳 退房後行李可寄存</span>
+      </div>
+      <div class="hotel-tax">⚠️ 城市稅 約 CHF 13（到店付）（到店現場另付）</div>
       </div>
     </div>
   </div>
@@ -804,6 +848,15 @@
       <div class="hotel-info">
         <div class="hotel-name">Sunstar Hotel &amp; SPA Grindelwald</div>
         <div class="hotel-times"><span>✅ 入住 7/17 16:00 起</span></div><div style="color:#6b7280;font-size:11px;margin-top:3px;">入住時間較晚，下山後直接辦理</div>
+      <div class="hotel-detail">
+        <span class="hotel-tag hotel-tag-ok">🍳 早餐含（免費自助，艾格爾景觀）</span>
+        <span class="hotel-tag hotel-tag-ok">🏊 SPA + 泳池免費</span>
+        <span class="hotel-tag hotel-tag-ok">🧒 兒童遊樂場</span>
+        <span class="hotel-tag hotel-tag-warn">❌ 不可自行烹煮</span>
+        <span class="hotel-tag hotel-tag-warn">⚠️ 城市稅最高（CHF 56）</span>
+        <span class="hotel-tag hotel-tag-info">不可退款，請妥善保存確認信</span>
+      </div>
+      <div class="hotel-tax">⚠️ 城市稅 約 CHF 56（TWD 2,381）— 三間住宿中最高（到店現場另付）</div>
       </div>
     </div>
   </div>
@@ -928,7 +981,12 @@
       <div class="hotel-icon">🏨</div>
       <div class="hotel-info">
         <div class="hotel-name">Sunstar Hotel &amp; SPA Grindelwald</div>
-        <div class="hotel-times"></div>
+        <div class="hotel-times"><span>🚪 退房 7/20 11:00 前</span></div>
+      <div class="hotel-detail">
+        <span class="hotel-tag hotel-tag-ok">🍳 早餐含</span>
+        <span class="hotel-tag hotel-tag-ok">🏊 SPA + 泳池免費使用</span>
+      </div>
+      <div class="hotel-tax">⚠️ 城市稅 約 CHF 56（到店付）（到店現場另付）</div>
       </div>
     </div>
   </div>
@@ -1069,7 +1127,15 @@
       <div class="hotel-icon">🏡</div>
       <div class="hotel-info">
         <div class="hotel-name">Chalet Antoine serviced Apartments by Mirabeau</div>
-        <div class="hotel-times"><span>✅ 入住 7/20 16:00 起</span></div><div style="color:#6b7280;font-size:11px;margin-top:3px;">入住時間較晚，抵達後先存放行李再去散步</div>
+        <div class="hotel-times"><span>✅ 入住 7/20 16:00 起</span></div><div style="color:#6b7280;font-size:11px;margin-top:3px;">入住後步行至 Gornergrat 車站換 Peak2Peak 票</div>
+      <div class="hotel-detail">
+        <span class="hotel-tag hotel-tag-warn">❓ 早餐需確認（訂單含咖啡/茶）</span>
+        <span class="hotel-tag hotel-tag-ok">🍳 可自行烹煮（廚房全配備）</span>
+        <span class="hotel-tag hotel-tag-ok">🛒 Denner 超市步行 1 分鐘（08:00–20:00）</span>
+        <span class="hotel-tag hotel-tag-ok">🏊 Le Mirabeau SPA 可使用</span>
+        <span class="hotel-tag hotel-tag-ok">👕 洗衣機/烘乾機（樓下）</span>
+      </div>
+      <div class="hotel-tax">⚠️ 城市稅 約 CHF 29（TWD 1,221）（到店現場另付）</div>
       </div>
     </div>
   </div>
@@ -1364,7 +1430,14 @@
       <div class="hotel-icon">🏨</div>
       <div class="hotel-info">
         <div class="hotel-name">Hotel Bristol AG</div>
-        <div class="hotel-times"><span>✅ 入住 7/23 14:00 起</span></div><div style="color:#6b7280;font-size:11px;margin-top:3px;">Hauser Hotel 退房後（7/23 12:00 前），抵蘇黎世約 12:00，可先寄放行李再去萊茵瀑布</div>
+        <div class="hotel-times"><span>✅ 入住 7/23 14:00 起</span></div><div style="color:#6b7280;font-size:11px;margin-top:3px;">抵蘇黎世約 12:00，可先寄放行李再去萊茵瀑布</div>
+      <div class="hotel-detail">
+        <span class="hotel-tag hotel-tag-warn">❌ 早餐不含（07:00–10:00 需另付）</span>
+        <span class="hotel-tag hotel-tag-warn">❌ 不可自行烹煮</span>
+        <span class="hotel-tag hotel-tag-ok">🏛️ 舊城區步行 5 分鐘</span>
+        <span class="hotel-tag hotel-tag-info">📞 +41442584444</span>
+      </div>
+      <div class="hotel-tax">⚠️ 城市稅 約 CHF 13（TWD 534）（到店現場另付）</div>
       </div>
     </div>
   </div>
@@ -1426,6 +1499,11 @@
       <div class="hotel-info">
         <div class="hotel-name">Hotel Bristol AG</div>
         <div class="hotel-times"><span>🚪 退房 7/24 11:30 前</span></div><div style="color:#6b7280;font-size:11px;margin-top:3px;">退房後直接前往機場，班機 13:30 起飛</div>
+      <div class="hotel-detail">
+        <span class="hotel-tag hotel-tag-warn">⚠️ 退房 11:30 → 班機 13:30，建議 11:00 前出發</span>
+        <span class="hotel-tag hotel-tag-warn">❌ 早餐不含，可直接去機場用餐</span>
+      </div>
+      <div class="hotel-tax">⚠️ 城市稅 約 CHF 13（到店付）（到店現場另付）</div>
       </div>
     </div>
   </div>
